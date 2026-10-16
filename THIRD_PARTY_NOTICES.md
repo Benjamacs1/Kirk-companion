@@ -1,9 +1,11 @@
 # Third-party notices
 
-Kirk Companion's own source is MIT-licensed. Runtime components retain their original open-source licenses:
+Kirk Companion code is MIT-licensed. Dependencies retain their open-source licenses; Cargo.lock identifies exact versions.
 
-- Electron: MIT, with Chromium, Node.js and other third-party notices distributed by Electron (`LICENSE.electron.txt`, `LICENSES.chromium.html` in packaged apps).
-- ws: MIT; package license is distributed with the runtime module.
-- Development/packaging: electron-builder (MIT), Playwright (Apache-2.0), archiver (MIT), and their dependencies. See `package-lock.json` and each package's license for details.
+Main components: egui/eframe/wgpu, Tokio, reqwest/rustls, serde, keyring/platform credential stores, tray-icon, rfd, and image. Consult each component's license rather than treating this list as a substitute for its terms.
 
-The setup window uses system fonts and CSS. No font files or runtime code from the proprietary Kirk client are redistributed.
+egui's embedded default fonts have separate notices, including Ubuntu Font Licence and SIL Open Font License. Packaging gathers dependency license files and embedded font notices into `THIRD-PARTY-LICENSES.txt`, installed beside the executable.
+
+The primary UI face is Squares Bold, the exact font used by Kirk Client. Copyright (c) 2014 by Typetype; designer Ivan Gladkikh, technical designer Olexa Volochay. The unmodified file's embedded license identifies SIL OFL 1.1. Its notice and license are in `assets/fonts/` and are distributed with the app.
+
+No assets from the user's inspiration images, proprietary mod runtime, or private account data are redistributed.

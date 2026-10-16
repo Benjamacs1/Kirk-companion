@@ -1,4 +1,4 @@
-name: Companion checks
+name: Native Rust checks
 on: [push, pull_request]
 permissions:
   contents: read
@@ -10,22 +10,19 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: dtolnay/rust-toolchain@stable
         with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm test
-      - run: npm audit --omit=dev
-      - run: npm run test:ui
-        if: runner.os == 'Windows'
-      - run: npm run dist
-        if: runner.os == 'Windows'
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+      - if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libxkbcommon-dev libwayland-dev libudev-dev libx11-dev libxcb-shape0-dev libxcb-xfixes0-dev
+      - run: cargo fmt --check
+      - run: cargo clippy --all-targets --locked -- -D warnings
+      - run: cargo test --locked
+      - run: cargo build --release --locked
       - uses: actions/upload-artifact@v4
-        if: runner.os == 'Windows'
         with:
-          name: kirk-companion-windows
+          name: kirk-companion-${{ runner.os }}
           path: |
-            dist/*.exe
-            dist/*-source.zip
-            dist/SHA256SUMS.txt
+            target/release/kirk-companion.exe
+            target/release/kirk-companion

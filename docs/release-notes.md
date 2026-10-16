@@ -1,14 +1,9 @@
-# Kirk Companion 0.1.0 preview
+# 0.2.0 native Rust preview
 
-First MIT-licensed desktop companion for launching existing Minecraft instances from the Kirk dashboard.
+Rewritten in Rust with a native egui/wgpu interface. Charcoal cards, warm white lettering, soft yellow highlights, and the exact Squares Bold font from Kirk Client follow the supplied references. Copyright notices identify Benja (Benjamacs1); source remains MIT-licensed.
 
-- Setup window matches the in-game Ghost and Kirk palettes, with sidebar navigation and compact controls.
-- Direct Prism/MultiMC instance launching, portable data folders and instance discovery.
-- Locally selected instance shortcuts for other launchers, plus an explicit Open launcher fallback.
-- Account-scoped PC pairing, outbound WebSocket connection, expiring profile-only requests and revocation.
-- System tray, optional start on login, and OS-encrypted pairing credentials where available.
-- Source archive and SHA256 checksums included with the Windows installer.
+Includes account statistics, period/license filters, daily activity, macro start/stop, game screenshots, shared Kirk conversation, saved powder/profit/items, local launcher profiles, OS credential storage, file dialogs, and tray behavior.
 
-The hosted Kirk dashboard/backend update is pending deployment. Until then, use local Test launch or a compatible local server. The full dashboard/backend/desktop flow has passed locally with a temporary database. No live Minecraft account login or actual game launch was used in automated testing.
+Verified locally: native Windows screenshots, Rust tests, backend account isolation, and real backend/native worker/recording launcher integration. A slow assistant request does not block website launch dispatch. Windows installer is unsigned. Public account features require the pending hosted backend deployment. Other platforms require hands-on desktop integration testing.
 
-Windows x64 installer and packaged app have been built and checked locally. The installer is unsigned. macOS/Linux builds and launcher-specific generated shortcuts need platform/integration verification. A successful dispatch means the launcher was requested; Minecraft authentication and Kirk readiness are separate states.
+MIT-licensed source. No proprietary mod source or login credentials. v0.1 Electron remains available historically; 0.2 has no Electron runtime.
