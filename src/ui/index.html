@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>Kirk Companion</title>
+    <link rel="stylesheet" href="gui.css" />
+    <script src="renderer.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <span class="mark" aria-hidden="true">K</span
+        ><strong>Kirk <span>Companion</span></strong>
+      </div>
+      <span class="header-caption">Desktop connection</span>
+    </header>
+    <div class="app-layout">
+      <aside class="sidebar">
+        <div class="sidebar-top">
+          <span class="nav-caption">COMPANION</span>
+          <nav aria-label="Setup sections">
+            <a class="nav-item active" href="#connection-card"
+              ><span aria-hidden="true">⌁</span>Connection</a
+            ><a class="nav-item" href="#profiles-card"
+              ><span aria-hidden="true">▧</span>Launch profiles</a
+            ><a class="nav-item" href="#preferences"
+              ><span aria-hidden="true">⚙</span>Preferences</a
+            >
+          </nav>
+        </div>
+        <div class="sidebar-bottom">
+          <span class="source-badge">MIT <span>Open source</span></span>
+          <div class="desktop-state">
+            <span id="sidebar-dot" class="dot"></span
+            ><span id="sidebar-status">Not paired</span>
+          </div>
+        </div>
+      </aside>
+      <main>
+        <div class="intro">
+          <div>
+            <p class="eyebrow">LET’S GET YOU CONNECTED</p>
+            <h1>A little closer to your game.</h1>
+            <p>Your launcher. Your instance. Ready from the Kirk dashboard.</p>
+          </div>
+          <button id="website" class="secondary">
+            Dashboard <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+        <div
+          id="notice"
+          class="notice"
+          role="status"
+          aria-live="polite"
+          hidden
+        ></div>
+        <div id="storage" class="notice" role="status" hidden></div>
+        <section
+          class="connection card"
+          id="connection-card"
+          aria-labelledby="connection-title"
+        >
+          <div class="section-heading">
+            <div>
+              <h2 id="connection-title">Connection</h2>
+              <p class="section-description">
+                Link this computer to your Kirk account.
+              </p>
+            </div>
+            <span id="status" class="status">Not paired</span>
+          </div>
+          <form id="pair-form">
+            <div class="pair-grid">
+              <label
+                >Computer name<input
+                  id="device-name"
+                  maxlength="64"
+                  required
+                  autocomplete="off" /></label
+              ><label
+                >Pairing code<input
+                  id="code"
+                  placeholder="ACDE FHJK"
+                  maxlength="12"
+                  required
+                  autocomplete="off"
+                  spellcheck="false" /></label
+              ><button type="submit" id="pair">Pair computer</button>
+            </div>
+            <p class="hint">
+              On the dashboard, choose <strong>Pair a computer</strong>, then
+              enter the code here.
+            </p>
+            <details id="advanced">
+              <summary>Use a different Kirk server</summary>
+              <label
+                >Server URL<input
+                  id="backend"
+                  type="url"
+                  required
+                  placeholder="https://api.charlie-kirk.uk"
+              /></label>
+            </details>
+          </form>
+          <div id="paired" class="paired-row" hidden>
+            <div>
+              <strong id="paired-name"></strong>
+              <p class="hint" id="paired-server"></p>
+            </div>
+            <button id="unpair" class="text-button">Unpair computer</button>
+          </div>
+        </section>
+        <section
+          class="card"
+          id="profiles-card"
+          aria-labelledby="profiles-title"
+        >
+          <div class="section-heading">
+            <div>
+              <h2 id="profiles-title">Launch profiles</h2>
+              <p class="section-description">
+                Choose what opens when you press Start game.
+              </p>
+            </div>
+            <button id="show-add" class="secondary">+ Add profile</button>
+          </div>
+          <div id="profiles"></div>
+          <form id="profile-form" hidden>
+            <h3>Add a launch profile</h3>
+            <div class="form-grid">
+              <label
+                >Profile name<input
+                  id="profile-name"
+                  maxlength="80"
+                  required
+                  placeholder="My Kirk instance" /></label
+              ><label
+                >Launch method<select id="kind">
+                  <option value="prism">Prism Launcher</option>
+                  <option value="multimc">MultiMC</option>
+                  <option value="shortcut">
+                    Instance shortcut (any launcher)
+                  </option>
+                  <option value="open">Open launcher only</option>
+                </select></label
+              >
+            </div>
+            <p class="hint" id="method-help"></p>
+            <label
+              >Launcher or shortcut
+              <div class="file-row">
+                <input
+                  id="target"
+                  readonly
+                  required
+                  placeholder="Choose a local file"
+                /><button id="choose-target" type="button" class="secondary">
+                  Browse…
+                </button>
+              </div></label
+            >
+            <div id="instance-fields">
+              <div class="form-grid">
+                <label
+                  >Instance folder name<input
+                    id="instance"
+                    maxlength="200"
+                    placeholder="26.2(kirk)" /></label
+                ><label
+                  >Detected instances<select id="detected">
+                    <option value="">Choose an instance…</option>
+                  </select></label
+                >
+              </div>
+              <label
+                >Launcher data folder
+                <span class="optional">(optional, for portable installs)</span>
+                <div class="file-row">
+                  <input
+                    id="root"
+                    readonly
+                    placeholder="Use the launcher's default"
+                  /><button id="choose-root" type="button" class="secondary">
+                    Browse…</button
+                  ><button id="clear-root" type="button" class="text-button">
+                    Clear
+                  </button>
+                </div></label
+              >
+            </div>
+            <p class="hint">
+              Use an instance with Kirk and its required Fabric version already
+              installed. Your launcher handles Minecraft login.
+            </p>
+            <div class="actions">
+              <button type="submit">Save profile</button
+              ><button id="cancel-add" type="button" class="text-button">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </section>
+        <section
+          class="preferences card"
+          id="preferences"
+          aria-labelledby="preferences-title"
+        >
+          <div class="section-heading">
+            <div>
+              <h2 id="preferences-title">Preferences</h2>
+              <p class="section-description">Make yourself at home.</p>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div>
+              <strong>Start on login</strong>
+              <p class="hint">Have the companion ready when you sign in.</p>
+            </div>
+            <label class="switch"
+              ><input
+                id="startup"
+                type="checkbox"
+                aria-label="Start companion when I sign in" /><span
+                aria-hidden="true"
+              ></span
+            ></label>
+          </div>
+          <div class="setting-row">
+            <div>
+              <strong>Appearance</strong>
+              <p class="hint">The same palette as your in-game GUI.</p>
+            </div>
+            <select id="appearance" aria-label="Appearance">
+              <option value="ghost">Ghost</option>
+              <option value="kirk">Kirk</option>
+            </select>
+          </div>
+          <p id="startup-help" class="hint">
+            Close the window to keep it in the system tray. Quit from the tray
+            to disconnect.
+          </p>
+        </section>
+        <footer>
+          <span id="version"></span
+          ><span
+            >Only the profiles you save here can be launched from your
+            account.</span
+          >
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>
